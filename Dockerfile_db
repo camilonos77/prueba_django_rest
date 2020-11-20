@@ -1,0 +1,3 @@
+FROM mdillon/postgis
+MAINTAINER tenali<tenali@yahoo.com>
+RUN apt-get update
