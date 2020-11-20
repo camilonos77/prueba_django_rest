@@ -51,6 +51,24 @@ Los servicios que se pueden consumir son los siguientes:
 
 ## Otros comandos
 
-Si se desean correar las pruebas unitarias ejecute el siguiente comando ingresando al contenedor de Django:
+Si se desean correar las pruebas unitarias ejecute el siguiente comando ingresando al contenedor de Django via bash:
 
     python manage.py test .
+
+
+
+Si se desea iniciar los contenedores luego de haber ejecutado los pasos anteriores y los contenedores estan apagados, se debe correr los siguientes comandos:
+
+    Para iniciar la base de datos
+
+    sudo docker ps -a 
+
+    Con este comando saldra la lista de contenedores, luego se debe buscar el ID del contenedor con nombre image_db
+
+    y asi se debe generar el siguiente comando
+
+    sudo docker start ID_CONTAINER
+
+    Para iniciar Django
+
+    sudo docker-compose up
