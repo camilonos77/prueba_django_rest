@@ -36,3 +36,12 @@ Lanzar el comando
 Posteriormente se debe iniciar el contenedor con el siguiente comando 
 
  -  sudo docker-compose up
+
+
+Finalmente se puede acceder al Api desde la url: localhost:8000
+
+
+Los servicios que se pueden consumir son los siguientes:
+
+    -   http://localhost:8000/api/v1/rows
+    -   http://localhost:8000/api/v1/datasets
