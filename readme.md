@@ -8,7 +8,7 @@
 # 1. Configuración de Docker
 
 
-En la primera parte se realizará la construcción de la imagen para el contenedor de la base de datos PostgreSQL
+En la primera parte se realizará la construcción de la imagen para el contenedor de la base de datos PostgreSQL. Por favor ejecute el siguiente comando
 
  - sudo docker build -t image_db -f Dockerfile_db . 
 
@@ -18,7 +18,7 @@ Ya que se tiene la imagen del contenedor de la base de datos, se deberá iniciar
 
 Ahora si se inicio correctamente el contenedor de la base de datos
 podemos crear la base de datos para que Django pueda iniciar
-el servicio web correctamente
+el servicio web correctamente. (Por favor esperar al menos 30 segundos para lanzar los siguientes comandos mientras inician todos los servicios de POSTGRES)
 
 -   sudo docker exec -it db_django psql -U postgres  -c "CREATE DATABASE test_django ENCODING 'UTF8';"
 

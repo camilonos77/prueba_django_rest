@@ -1,11 +1,12 @@
 version: '3.3'
 
 services:
-  db:
+  web:
     image: django_prueba_2
     container_name: django_prueba_container
     restart: always
     network_mode: "host"
-    command: python manage.py makemigrations
-    command: python manage.py migrate
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      bash -c "python manage.py migrate --noinput
+      && python manage.py runserver 0.0.0.0:8000"
+      
