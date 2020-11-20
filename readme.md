@@ -1,11 +1,11 @@
-# Prueba técnica Abraxas
+## Prueba técnica Abraxas
 
-# Presentado por Camilo A. Pulido
-# contacto: camilo.pr.77190@gmail.com
+## Presentado por Camilo A. Pulido
+## contacto: camilo.pr.77190@gmail.com
 
-# Pasos para desplegar el proyecto
+## Pasos para desplegar el proyecto
 
-# 1. Configuración de Docker
+## 1. Configuración de Docker
 
 
 En la primera parte se realizará la construcción de la imagen para el contenedor de la base de datos PostgreSQL. Por favor ejecute el siguiente comando
@@ -43,5 +43,14 @@ Finalmente se puede acceder al Api desde la url: localhost:8000
 
 Los servicios que se pueden consumir son los siguientes:
 
-    -   http://localhost:8000/api/v1/rows
+    - http://localhost:8000/api/v1/rows
     -   http://localhost:8000/api/v1/datasets
+
+
+
+
+## Otros comandos
+
+Si se desean correar las pruebas unitarias ejecute el siguiente comando ingresando al contenedor de Django:
+
+    python manage.py test .

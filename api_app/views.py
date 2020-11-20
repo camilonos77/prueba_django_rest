@@ -1,24 +1,50 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+
+
+# Libs django - project
 from django.shortcuts import render
 from rest_framework import generics,status
 from rest_framework.response import Response
 
+
+# Libs app
 from api_app.models import *
 from api_app.serializers import DataSetSerializer,RowSerializer
 
-
+# Libs external vendor
 from datetime import datetime, time, date, timedelta
 from io import StringIO
 import csv
 from django.contrib.gis.geos import Point
 
 
+
+
+
 class ListDataSet(generics.ListCreateAPIView):
+
+    """
+        ListDataSet class
+        ClassView para gestionar el endPoint de Dataset
+        Args:
+           
+    """
+
     queryset = Dataset.objects.filter(status_active = 1 )
     serializer_class = DataSetSerializer
 
 
     def post(self,request):
+
+        """
+            post  method
+            Se configura funcionamiento metodo http post
+            Args:
+                request(dict): contiene la informacion request http
+           
+        """
+
         try:
             file_request_list = request.FILES
             # se valida si el request tiene el archivo
@@ -38,11 +64,8 @@ class ListDataSet(generics.ListCreateAPIView):
                 if filename.endswith('.csv'): 
                     dataset_instance = serializer.save()# create dataset instance
                     file_csv = file_request.read().decode('utf-8')
+                    # se lee archivo csv
                     csv_data = csv.reader(StringIO(file_csv), delimiter=',')
-
-                    #for row in csv_data:
-                    #    print(row)
-
                     counter_rows = 0
                     for row in csv_data:
                         if counter_rows > 0:
@@ -56,37 +79,55 @@ class ListDataSet(generics.ListCreateAPIView):
                             item_row.client_id = int(row[2])
                             item_row.client_name = row[3]
                             item_row.point = point
-                            item_row.save()
-                            print("item_row",item_row.id)
+                            item_row.save() # se almacena el nuevo objeto Row
+                            
                             
                         counter_rows =  counter_rows + 1
 
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
                 else:
+                    # se valida extension del archivo para que sea csv
                     raise Exception('ERROR el archivo no contiene una extensión válida')
             else:
+                 # se valida que el request tenga el archivo
                  raise Exception('ERROR el request no contine un archivo con el valor file')
         except Exception as e:
+            # se retorna la Exception si se genera un error no controlado
             return Response(str(e))  
 
 
 
 
 class ListRow(generics.ListCreateAPIView):
-    #queryset = Row.objects.filter(status_active = 1 )
+
+    """
+        ListRow class
+        ClassView para gestionar el endPoint de Row
+        Args:
+           
+    """
     serializer_class = RowSerializer
 
     def get_queryset(self):
+
         """
-        Optionally restricts the returned purchases to a given user,
-        by filtering against a `username` query parameter in the URL.
+            get_queryset  method
+            Se configura funcionamiento par consultar con parametros queryset
+            Args:
+                
+           
         """
+        
         queryset = queryset = Row.objects.filter(status_active = 1 )
 
+        # se obtienen queryset del request
         dataset_id = self.request.query_params.get('dataset_id', None)
         name_dataset = self.request.query_params.get('name', None)
         point = self.request.query_params.get('point', None)
         
+        # se generan las diferentes combinaciones para que los queryset no sea 
+        # obligatorios sino que estos sean  opcionales
+
         if (dataset_id is not None) and (name_dataset is not None) and (point is not None):
             print("entro a point ")
             queryset = queryset.filter(   point = point , dataset_id = dataset_id, dataset_id__name =  ""+(name_dataset))
